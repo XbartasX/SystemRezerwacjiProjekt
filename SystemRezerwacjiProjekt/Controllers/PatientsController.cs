@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using SystemRezerwacjiProjekt.Data;
 using SystemRezerwacjiProjekt.Models;
 
@@ -25,7 +26,11 @@ namespace SystemRezerwacjiProjekt.Controllers
         // GET: Patients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Patients.Include(s => s.User).ToListAsync());
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return View(await _context.Patients
+                .Include(s => s.User)
+                .Where(s => s.UserId == userId)
+                .ToListAsync());
         }
 
         // GET: Patients/Details/5
