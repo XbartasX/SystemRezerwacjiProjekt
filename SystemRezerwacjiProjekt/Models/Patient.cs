@@ -17,6 +17,6 @@ namespace SystemRezerwacjiProjekt.Models
         public string Surname { get; set; }
 
         public string? UserId {  get; set; }
-        public IdentityUser? User { get; set; }
+        public virtual IdentityUser? User { get; set; }
     }
 }

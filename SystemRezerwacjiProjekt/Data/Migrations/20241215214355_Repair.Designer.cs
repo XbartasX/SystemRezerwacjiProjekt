@@ -12,8 +12,8 @@ using SystemRezerwacjiProjekt.Data;
 namespace SystemRezerwacjiProjekt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241215210409_all")]
-    partial class all
+    [Migration("20241215214355_Repair")]
+    partial class Repair
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
