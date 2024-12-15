@@ -33,6 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -41,3 +42,9 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizePage("/Index"); // Przyk³ad: wymusza autoryzacjê na stronie g³ównej
+    options.Conventions.AllowAnonymousToPage("/Account/Login"); // Pozwól na dostêp do strony logowania
+    options.Conventions.AllowAnonymousToPage("/Account/Register"); // Pozwól na dostêp do strony rejestracji
+});

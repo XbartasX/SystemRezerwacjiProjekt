@@ -7,6 +7,5 @@ namespace SystemRezerwacjiProjekt.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public List<Appointment> Appointments { get; set; }
     }
 }

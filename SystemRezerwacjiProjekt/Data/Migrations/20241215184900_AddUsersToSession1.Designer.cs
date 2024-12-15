@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SystemRezerwacjiProjekt.Data;
 
@@ -11,9 +12,11 @@ using SystemRezerwacjiProjekt.Data;
 namespace SystemRezerwacjiProjekt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241215184900_AddUsersToSession1")]
+    partial class AddUsersToSession1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,12 +293,7 @@ namespace SystemRezerwacjiProjekt.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Patients");
                 });
@@ -354,13 +352,13 @@ namespace SystemRezerwacjiProjekt.Data.Migrations
             modelBuilder.Entity("SystemRezerwacjiProjekt.Models.Appointment", b =>
                 {
                     b.HasOne("SystemRezerwacjiProjekt.Models.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SystemRezerwacjiProjekt.Models.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -370,13 +368,14 @@ namespace SystemRezerwacjiProjekt.Data.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("SystemRezerwacjiProjekt.Models.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
             modelBuilder.Entity("SystemRezerwacjiProjekt.Models.Patient", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }
